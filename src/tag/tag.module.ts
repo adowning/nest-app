@@ -1,10 +1,10 @@
-import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
-import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
-import { Module } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { TagInputDTO } from './dto/tag-input.dto';
-import { TagDTO } from './dto/tag.dto';
-import { TagEntity } from './tag.entity';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql'
+import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm'
+import { Module } from '@nestjs/common'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { TagInputDTO } from './dto/tag-input.dto'
+import { TagDTO } from './dto/tag.dto'
+import { TagEntity } from './tag.entity'
 
 @Module({
   imports: [

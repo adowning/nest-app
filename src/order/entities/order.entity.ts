@@ -8,54 +8,54 @@ import {
   ManyToMany,
   JoinTable,
   ManyToOne,
-} from 'typeorm';
-import { AccountEntity } from '../../account/entities/account.entity';
-import { JobEntity } from '../../job/entities/job.entity';
-import { TagEntity } from '../../tag/tag.entity';
+} from 'typeorm'
+import { AccountEntity } from '../../account/entities/account.entity'
+import { JobEntity } from '../../job/entities/job.entity'
+import { TagEntity } from '../../tag/tag.entity'
 // import { UserEntity } from '../../user/entities/user.entity';
 
 @Entity({ name: 'order_item' })
 export class OrderEntity {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id!: number
 
   @Column()
-  type!: string;
+  type!: string
 
   @Column({ nullable: false })
-  orderID!: string;
+  orderID!: string
 
   @Column({ nullable: false })
-  accountID!: string;
+  accountID!: string
 
   @ManyToOne(() => AccountEntity, (a) => a.orders, {
     onDelete: 'CASCADE',
     nullable: false,
   })
-  account!: AccountEntity;
+  account!: AccountEntity
 
   @OneToMany(() => JobEntity, (job) => job.order)
-  jobs!: JobEntity[];
+  jobs!: JobEntity[]
 
   @Column()
-  dueDate!: Date;
+  dueDate!: Date
 
   @CreateDateColumn()
-  created!: Date;
+  created!: Date
 
   @UpdateDateColumn()
-  updated!: Date;
+  updated!: Date
 
   @ManyToMany(() => TagEntity, (tag) => tag.orders)
   @JoinTable()
-  tags!: TagEntity[];
+  tags!: TagEntity[]
 
   @Column({ type: 'integer', nullable: false, default: 0 })
-  priority!: number;
+  priority!: number
 
   @Column({ nullable: true })
-  createdBy?: string;
+  createdBy?: string
 
   @Column({ nullable: true })
-  updatedBy?: string;
+  updatedBy?: string
 }

@@ -2,28 +2,1117 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Tag {
+  id: ID!
+  name: String!
+  created: DateTime!
+  updated: DateTime!
+  createdBy: String
+  updatedBy: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DeleteManyResponse {
+  """The number of records deleted."""
+  deletedCount: Int!
+}
+
+type TagDeleteResponse {
+  id: ID
+  name: String
+  created: DateTime
+  updated: DateTime
+  createdBy: String
+  updatedBy: String
+}
+
+type UpdateManyResponse {
+  """The number of records updated."""
+  updatedCount: Int!
+}
+
+type TagEdge {
+  """The node containing the Tag"""
+  node: Tag!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+"""Cursor for paging through collections"""
+scalar ConnectionCursor
+
+type PageInfo {
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+
+  """The cursor of the first returned record."""
+  startCursor: ConnectionCursor
+
+  """The cursor of the last returned record."""
+  endCursor: ConnectionCursor
+}
+
+type TagConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [TagEdge!]!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type TagCountAggregate {
+  id: Int
+  name: Int
+  created: Int
+  updated: Int
+  createdBy: Int
+  updatedBy: Int
+}
+
+type TagSumAggregate {
+  id: Float
+}
+
+type TagAvgAggregate {
+  id: Float
+}
+
+type TagMinAggregate {
+  id: ID
+  name: String
+  created: DateTime
+  updated: DateTime
+  createdBy: String
+  updatedBy: String
+}
+
+type TagMaxAggregate {
+  id: ID
+  name: String
+  created: DateTime
+  updated: DateTime
+  createdBy: String
+  updatedBy: String
+}
+
+type TagAggregateResponse {
+  count: TagCountAggregate
+  sum: TagSumAggregate
+  avg: TagAvgAggregate
+  min: TagMinAggregate
+  max: TagMaxAggregate
+}
+
+type LoginResponse {
+  accessToken: String!
+}
+
+type User {
+  id: Float!
+  username: String!
+  created: DateTime!
+  updated: DateTime!
+}
+
+type Order {
+  id: ID!
+  orderID: String!
+  orderName: String!
+  created: DateTime!
+  updated: DateTime!
+}
+
 type Account {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: ID!
+  accountID: String!
+  accountName: String!
+  firstName: String
+  lastName: String
+  commercial: Boolean!
+  created: DateTime!
+  updated: DateTime!
+  email: String
+  prettyAddress: String
+  companyName: String
+  primaryPhone: String!
+  createdBy: String
+  updatedBy: String
+  tags(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: TagFilter = {}
+
+    """Specify to sort results."""
+    sorting: [TagSort!] = []
+  ): AccountTagsConnection!
+  orders(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: OrderFilter = {}
+
+    """Specify to sort results."""
+    sorting: [OrderSort!] = []
+  ): AccountOrdersConnection!
+  tagsAggregate(
+    """Filter to find records to aggregate on"""
+    filter: TagAggregateFilter
+  ): AccountTagsAggregateResponse!
+  ordersAggregate(
+    """Filter to find records to aggregate on"""
+    filter: OrderAggregateFilter
+  ): AccountOrdersAggregateResponse!
+}
+
+input CursorPaging {
+  """Paginate before opaque cursor"""
+  before: ConnectionCursor
+
+  """Paginate after opaque cursor"""
+  after: ConnectionCursor
+
+  """Paginate first"""
+  first: Int
+
+  """Paginate last"""
+  last: Int
+}
+
+input TagFilter {
+  and: [TagFilter!]
+  or: [TagFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  created: DateFieldComparison
+  updated: DateFieldComparison
+  createdBy: StringFieldComparison
+  updatedBy: StringFieldComparison
+}
+
+input IDFilterComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: ID
+  neq: ID
+  gt: ID
+  gte: ID
+  lt: ID
+  lte: ID
+  like: ID
+  notLike: ID
+  iLike: ID
+  notILike: ID
+  in: [ID!]
+  notIn: [ID!]
+}
+
+input StringFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: String
+  neq: String
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  like: String
+  notLike: String
+  iLike: String
+  notILike: String
+  in: [String!]
+  notIn: [String!]
+}
+
+input DateFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: DateTime
+  neq: DateTime
+  gt: DateTime
+  gte: DateTime
+  lt: DateTime
+  lte: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  between: DateFieldComparisonBetween
+  notBetween: DateFieldComparisonBetween
+}
+
+input DateFieldComparisonBetween {
+  lower: DateTime!
+  upper: DateTime!
+}
+
+input TagSort {
+  field: TagSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum TagSortFields {
+  id
+  name
+  created
+  updated
+  createdBy
+  updatedBy
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+input OrderFilter {
+  and: [OrderFilter!]
+  or: [OrderFilter!]
+  id: IDFilterComparison
+  orderID: StringFieldComparison
+  orderName: StringFieldComparison
+}
+
+input OrderSort {
+  field: OrderSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum OrderSortFields {
+  id
+  orderID
+  orderName
+}
+
+input TagAggregateFilter {
+  and: [TagAggregateFilter!]
+  or: [TagAggregateFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  created: DateFieldComparison
+  updated: DateFieldComparison
+  createdBy: StringFieldComparison
+  updatedBy: StringFieldComparison
+}
+
+input OrderAggregateFilter {
+  and: [OrderAggregateFilter!]
+  or: [OrderAggregateFilter!]
+  id: IDFilterComparison
+  orderID: StringFieldComparison
+  orderName: StringFieldComparison
+}
+
+type AccountDeleteResponse {
+  id: ID
+  accountID: String
+  accountName: String
+  firstName: String
+  lastName: String
+  commercial: Boolean
+  created: DateTime
+  updated: DateTime
+  email: String
+  prettyAddress: String
+  companyName: String
+  primaryPhone: String
+  createdBy: String
+  updatedBy: String
+}
+
+type AccountEdge {
+  """The node containing the Account"""
+  node: Account!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+type AccountConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [AccountEdge!]!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type AccountCountAggregate {
+  id: Int
+  accountID: Int
+  accountName: Int
+  firstName: Int
+  lastName: Int
+  commercial: Int
+  created: Int
+  updated: Int
+  email: Int
+  prettyAddress: Int
+  companyName: Int
+  primaryPhone: Int
+  createdBy: Int
+  updatedBy: Int
+}
+
+type AccountSumAggregate {
+  id: Float
+}
+
+type AccountAvgAggregate {
+  id: Float
+}
+
+type AccountMinAggregate {
+  id: ID
+  accountID: String
+  accountName: String
+  firstName: String
+  lastName: String
+  created: DateTime
+  updated: DateTime
+  email: String
+  prettyAddress: String
+  companyName: String
+  primaryPhone: String
+  createdBy: String
+  updatedBy: String
+}
+
+type AccountMaxAggregate {
+  id: ID
+  accountID: String
+  accountName: String
+  firstName: String
+  lastName: String
+  created: DateTime
+  updated: DateTime
+  email: String
+  prettyAddress: String
+  companyName: String
+  primaryPhone: String
+  createdBy: String
+  updatedBy: String
+}
+
+type AccountAggregateResponse {
+  count: AccountCountAggregate
+  sum: AccountSumAggregate
+  avg: AccountAvgAggregate
+  min: AccountMinAggregate
+  max: AccountMaxAggregate
+}
+
+type AccountTagsConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [TagEdge!]!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type OrderEdge {
+  """The node containing the Order"""
+  node: Order!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+type AccountOrdersConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [OrderEdge!]!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type AccountTagsCountAggregate {
+  id: Int
+  name: Int
+  created: Int
+  updated: Int
+  createdBy: Int
+  updatedBy: Int
+}
+
+type AccountTagsSumAggregate {
+  id: Float
+}
+
+type AccountTagsAvgAggregate {
+  id: Float
+}
+
+type AccountTagsMinAggregate {
+  id: ID
+  name: String
+  created: DateTime
+  updated: DateTime
+  createdBy: String
+  updatedBy: String
+}
+
+type AccountTagsMaxAggregate {
+  id: ID
+  name: String
+  created: DateTime
+  updated: DateTime
+  createdBy: String
+  updatedBy: String
+}
+
+type AccountTagsAggregateResponse {
+  count: AccountTagsCountAggregate
+  sum: AccountTagsSumAggregate
+  avg: AccountTagsAvgAggregate
+  min: AccountTagsMinAggregate
+  max: AccountTagsMaxAggregate
+}
+
+type AccountOrdersCountAggregate {
+  id: Int
+  orderID: Int
+  orderName: Int
+}
+
+type AccountOrdersMinAggregate {
+  id: ID
+  orderID: String
+  orderName: String
+}
+
+type AccountOrdersMaxAggregate {
+  id: ID
+  orderID: String
+  orderName: String
+}
+
+type AccountOrdersAggregateResponse {
+  count: AccountOrdersCountAggregate
+  min: AccountOrdersMinAggregate
+  max: AccountOrdersMaxAggregate
+}
+
+type OrderDeleteResponse {
+  id: ID
+  orderID: String
+  orderName: String
+  created: DateTime
+  updated: DateTime
+}
+
+type OrderConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [OrderEdge!]!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type OrderCountAggregate {
+  id: Int
+  orderID: Int
+  orderName: Int
+}
+
+type OrderMinAggregate {
+  id: ID
+  orderID: String
+  orderName: String
+}
+
+type OrderMaxAggregate {
+  id: ID
+  orderID: String
+  orderName: String
+}
+
+type OrderAggregateResponse {
+  count: OrderCountAggregate
+  min: OrderMinAggregate
+  max: OrderMaxAggregate
+}
+
+type Job {
+  id: ID!
+  jobID: String!
+  jobName: String!
+  created: DateTime!
+  updated: DateTime!
+}
+
+type JobDeleteResponse {
+  id: ID
+  jobID: String
+  jobName: String
+  created: DateTime
+  updated: DateTime
+}
+
+type JobEdge {
+  """The node containing the Job"""
+  node: Job!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+type JobConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [JobEdge!]!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type JobCountAggregate {
+  id: Int
+  jobID: Int
+  jobName: Int
+}
+
+type JobMinAggregate {
+  id: ID
+  jobID: String
+  jobName: String
+}
+
+type JobMaxAggregate {
+  id: ID
+  jobID: String
+  jobName: String
+}
+
+type JobAggregateResponse {
+  count: JobCountAggregate
+  min: JobMinAggregate
+  max: JobMaxAggregate
 }
 
 type Query {
-  account(id: Int!): Account!
+  tag(
+    """The id of the record to find."""
+    id: ID!
+  ): Tag
+  tags(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: TagFilter = {}
+
+    """Specify to sort results."""
+    sorting: [TagSort!] = []
+  ): TagConnection!
+  tagAggregate(
+    """Filter to find records to aggregate on"""
+    filter: TagAggregateFilter
+  ): TagAggregateResponse!
+  me: User!
+  account(
+    """The id of the record to find."""
+    id: ID!
+  ): Account
+  accounts(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: AccountFilter = {}
+
+    """Specify to sort results."""
+    sorting: [AccountSort!] = []
+  ): AccountConnection!
+  accountAggregate(
+    """Filter to find records to aggregate on"""
+    filter: AccountAggregateFilter
+  ): AccountAggregateResponse!
+  order(
+    """The id of the record to find."""
+    id: ID!
+  ): Order
+  orders(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: OrderFilter = {}
+
+    """Specify to sort results."""
+    sorting: [OrderSort!] = []
+  ): OrderConnection!
+  orderAggregate(
+    """Filter to find records to aggregate on"""
+    filter: OrderAggregateFilter
+  ): OrderAggregateResponse!
+  job(
+    """The id of the record to find."""
+    id: ID!
+  ): Job
+  jobs(
+    """Limit or page results."""
+    paging: CursorPaging = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: JobFilter = {}
+
+    """Specify to sort results."""
+    sorting: [JobSort!] = []
+  ): JobConnection!
+  jobAggregate(
+    """Filter to find records to aggregate on"""
+    filter: JobAggregateFilter
+  ): JobAggregateResponse!
+}
+
+input AccountFilter {
+  and: [AccountFilter!]
+  or: [AccountFilter!]
+  id: IDFilterComparison
+  accountID: StringFieldComparison
+  accountName: StringFieldComparison
+  firstName: StringFieldComparison
+  lastName: StringFieldComparison
+  commercial: BooleanFieldComparison
+  created: DateFieldComparison
+  updated: DateFieldComparison
+  email: StringFieldComparison
+  prettyAddress: StringFieldComparison
+  companyName: StringFieldComparison
+  primaryPhone: StringFieldComparison
+  createdBy: StringFieldComparison
+  updatedBy: StringFieldComparison
+  tags: AccountFilterTagFilter
+  orders: AccountFilterOrderFilter
+}
+
+input BooleanFieldComparison {
+  is: Boolean
+  isNot: Boolean
+}
+
+input AccountFilterTagFilter {
+  and: [AccountFilterTagFilter!]
+  or: [AccountFilterTagFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  created: DateFieldComparison
+  updated: DateFieldComparison
+  createdBy: StringFieldComparison
+  updatedBy: StringFieldComparison
+}
+
+input AccountFilterOrderFilter {
+  and: [AccountFilterOrderFilter!]
+  or: [AccountFilterOrderFilter!]
+  id: IDFilterComparison
+  orderID: StringFieldComparison
+  orderName: StringFieldComparison
+}
+
+input AccountSort {
+  field: AccountSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum AccountSortFields {
+  id
+  accountID
+  accountName
+  firstName
+  lastName
+  commercial
+  created
+  updated
+  email
+  prettyAddress
+  companyName
+  primaryPhone
+  createdBy
+  updatedBy
+}
+
+input AccountAggregateFilter {
+  and: [AccountAggregateFilter!]
+  or: [AccountAggregateFilter!]
+  id: IDFilterComparison
+  accountID: StringFieldComparison
+  accountName: StringFieldComparison
+  firstName: StringFieldComparison
+  lastName: StringFieldComparison
+  commercial: BooleanFieldComparison
+  created: DateFieldComparison
+  updated: DateFieldComparison
+  email: StringFieldComparison
+  prettyAddress: StringFieldComparison
+  companyName: StringFieldComparison
+  primaryPhone: StringFieldComparison
+  createdBy: StringFieldComparison
+  updatedBy: StringFieldComparison
+}
+
+input JobFilter {
+  and: [JobFilter!]
+  or: [JobFilter!]
+  id: IDFilterComparison
+  jobID: StringFieldComparison
+  jobName: StringFieldComparison
+}
+
+input JobSort {
+  field: JobSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum JobSortFields {
+  id
+  jobID
+  jobName
+}
+
+input JobAggregateFilter {
+  and: [JobAggregateFilter!]
+  or: [JobAggregateFilter!]
+  id: IDFilterComparison
+  jobID: StringFieldComparison
+  jobName: StringFieldComparison
 }
 
 type Mutation {
-  createAccount(createAccountInput: CreateAccountInput!): Account!
-  updateAccount(updateAccountInput: UpdateAccountInput!): Account!
-  removeAccount(id: Int!): Account!
+  deleteOneTag(input: DeleteOneInput!): TagDeleteResponse!
+  deleteManyTags(input: DeleteManyTagsInput!): DeleteManyResponse!
+  updateOneTag(input: UpdateOneTagInput!): Tag!
+  updateManyTags(input: UpdateManyTagsInput!): UpdateManyResponse!
+  createOneTag(input: CreateOneTagInput!): Tag!
+  createManyTags(input: CreateManyTagsInput!): [Tag!]!
+  login(input: LoginInputDTO!): LoginResponse!
+  deleteOneAccount(input: DeleteOneInput!): AccountDeleteResponse!
+  deleteManyAccounts(input: DeleteManyAccountsInput!): DeleteManyResponse!
+  updateOneAccount(input: UpdateOneAccountInput!): Account!
+  updateManyAccounts(input: UpdateManyAccountsInput!): UpdateManyResponse!
+  createOneAccount(input: CreateOneAccountInput!): Account!
+  createManyAccounts(input: CreateManyAccountsInput!): [Account!]!
+  removeTagsFromAccount(input: RelationsInput!): Account!
+  addTagsToAccount(input: RelationsInput!): Account!
+  addOrdersToAccount(input: RelationsInput!): Account!
+  deleteOneOrder(input: DeleteOneInput!): OrderDeleteResponse!
+  deleteManyOrders(input: DeleteManyOrdersInput!): DeleteManyResponse!
+  updateOneOrder(input: UpdateOneOrderInput!): Order!
+  updateManyOrders(input: UpdateManyOrdersInput!): UpdateManyResponse!
+  createOneOrder(input: CreateOneOrderInput!): Order!
+  createManyOrders(input: CreateManyOrdersInput!): [Order!]!
+  deleteOneJob(input: DeleteOneInput!): JobDeleteResponse!
+  deleteManyJobs(input: DeleteManyJobsInput!): DeleteManyResponse!
+  updateOneJob(input: UpdateOneJobInput!): Job!
+  updateManyJobs(input: UpdateManyJobsInput!): UpdateManyResponse!
+  createOneJob(input: CreateOneJobInput!): Job!
+  createManyJobs(input: CreateManyJobsInput!): [Job!]!
 }
 
-input CreateAccountInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input DeleteOneInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input DeleteManyTagsInput {
+  """Filter to find records to delete"""
+  filter: TagDeleteFilter!
+}
+
+input TagDeleteFilter {
+  and: [TagDeleteFilter!]
+  or: [TagDeleteFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  created: DateFieldComparison
+  updated: DateFieldComparison
+  createdBy: StringFieldComparison
+  updatedBy: StringFieldComparison
+}
+
+input UpdateOneTagInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: TagInput!
+}
+
+input TagInput {
+  name: String!
+}
+
+input UpdateManyTagsInput {
+  """Filter used to find fields to update"""
+  filter: TagUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: TagInput!
+}
+
+input TagUpdateFilter {
+  and: [TagUpdateFilter!]
+  or: [TagUpdateFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  created: DateFieldComparison
+  updated: DateFieldComparison
+  createdBy: StringFieldComparison
+  updatedBy: StringFieldComparison
+}
+
+input CreateOneTagInput {
+  """The record to create"""
+  tag: TagInput!
+}
+
+input CreateManyTagsInput {
+  """Array of records to create"""
+  tags: [TagInput!]!
+}
+
+input LoginInputDTO {
+  username: String!
+  password: String!
+}
+
+input DeleteManyAccountsInput {
+  """Filter to find records to delete"""
+  filter: AccountDeleteFilter!
+}
+
+input AccountDeleteFilter {
+  and: [AccountDeleteFilter!]
+  or: [AccountDeleteFilter!]
+  id: IDFilterComparison
+  accountID: StringFieldComparison
+  accountName: StringFieldComparison
+  firstName: StringFieldComparison
+  lastName: StringFieldComparison
+  commercial: BooleanFieldComparison
+  created: DateFieldComparison
+  updated: DateFieldComparison
+  email: StringFieldComparison
+  prettyAddress: StringFieldComparison
+  companyName: StringFieldComparison
+  primaryPhone: StringFieldComparison
+  createdBy: StringFieldComparison
+  updatedBy: StringFieldComparison
+}
+
+input UpdateOneAccountInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateAccountInput!
 }
 
 input UpdateAccountInput {
   """Example field (placeholder)"""
+  accountName: String
+
+  """Example field (placeholder)"""
+  accountID: String
+  priority: Int
+  id: Int!
+}
+
+input UpdateManyAccountsInput {
+  """Filter used to find fields to update"""
+  filter: AccountUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateAccountInput!
+}
+
+input AccountUpdateFilter {
+  and: [AccountUpdateFilter!]
+  or: [AccountUpdateFilter!]
+  id: IDFilterComparison
+  accountID: StringFieldComparison
+  accountName: StringFieldComparison
+  firstName: StringFieldComparison
+  lastName: StringFieldComparison
+  commercial: BooleanFieldComparison
+  created: DateFieldComparison
+  updated: DateFieldComparison
+  email: StringFieldComparison
+  prettyAddress: StringFieldComparison
+  companyName: StringFieldComparison
+  primaryPhone: StringFieldComparison
+  createdBy: StringFieldComparison
+  updatedBy: StringFieldComparison
+}
+
+input CreateOneAccountInput {
+  """The record to create"""
+  account: AccountInputDTO!
+}
+
+input AccountInputDTO {
+  accountName: String!
+}
+
+input CreateManyAccountsInput {
+  """Array of records to create"""
+  accounts: [AccountInputDTO!]!
+}
+
+input RelationsInput {
+  """The id of the record."""
+  id: ID!
+
+  """The ids of the relations."""
+  relationIds: [ID!]!
+}
+
+input DeleteManyOrdersInput {
+  """Filter to find records to delete"""
+  filter: OrderDeleteFilter!
+}
+
+input OrderDeleteFilter {
+  and: [OrderDeleteFilter!]
+  or: [OrderDeleteFilter!]
+  id: IDFilterComparison
+  orderID: StringFieldComparison
+  orderName: StringFieldComparison
+}
+
+input UpdateOneOrderInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateOrderInput!
+}
+
+input UpdateOrderInput {
+  """Example field (placeholder)"""
   exampleField: Int
   id: Int!
+}
+
+input UpdateManyOrdersInput {
+  """Filter used to find fields to update"""
+  filter: OrderUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateOrderInput!
+}
+
+input OrderUpdateFilter {
+  and: [OrderUpdateFilter!]
+  or: [OrderUpdateFilter!]
+  id: IDFilterComparison
+  orderID: StringFieldComparison
+  orderName: StringFieldComparison
+}
+
+input CreateOneOrderInput {
+  """The record to create"""
+  order: OrderInput!
+}
+
+input OrderInput {
+  name: String!
+}
+
+input CreateManyOrdersInput {
+  """Array of records to create"""
+  orders: [OrderInput!]!
+}
+
+input DeleteManyJobsInput {
+  """Filter to find records to delete"""
+  filter: JobDeleteFilter!
+}
+
+input JobDeleteFilter {
+  and: [JobDeleteFilter!]
+  or: [JobDeleteFilter!]
+  id: IDFilterComparison
+  jobID: StringFieldComparison
+  jobName: StringFieldComparison
+}
+
+input UpdateOneJobInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateJobInput!
+}
+
+input UpdateJobInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateManyJobsInput {
+  """Filter used to find fields to update"""
+  filter: JobUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateJobInput!
+}
+
+input JobUpdateFilter {
+  and: [JobUpdateFilter!]
+  or: [JobUpdateFilter!]
+  id: IDFilterComparison
+  jobID: StringFieldComparison
+  jobName: StringFieldComparison
+}
+
+input CreateOneJobInput {
+  """The record to create"""
+  job: JobInput!
+}
+
+input JobInput {
+  name: String!
+}
+
+input CreateManyJobsInput {
+  """Array of records to create"""
+  jobs: [JobInput!]!
 }

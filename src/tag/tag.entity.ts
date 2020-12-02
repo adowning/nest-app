@@ -6,37 +6,37 @@ import {
   UpdateDateColumn,
   ObjectType,
   ManyToMany,
-} from 'typeorm';
-import { AccountEntity } from '../account/entities/account.entity';
-import { JobEntity } from '../job/entities/job.entity';
-import { OrderEntity } from '../order/entities/order.entity';
+} from 'typeorm'
+import { AccountEntity } from '../account/entities/account.entity'
+import { JobEntity } from '../job/entities/job.entity'
+import { OrderEntity } from '../order/entities/order.entity'
 
 @Entity({ name: 'tag' })
 export class TagEntity {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id!: number
 
   @Column()
-  name!: string;
+  name!: string
 
   @CreateDateColumn()
-  created!: Date;
+  created!: Date
 
   @UpdateDateColumn()
-  updated!: Date;
+  updated!: Date
 
   @ManyToMany((): ObjectType<OrderEntity> => OrderEntity, (o) => o.tags)
-  orders!: OrderEntity[];
+  orders!: OrderEntity[]
 
   @ManyToMany((): ObjectType<AccountEntity> => AccountEntity, (a) => a.tags)
-  accounts!: AccountEntity[];
+  accounts!: AccountEntity[]
 
   @ManyToMany((): ObjectType<JobEntity> => JobEntity, (a) => a.tags)
-  jobs!: JobEntity[];
+  jobs!: JobEntity[]
 
   @Column({ nullable: true })
-  createdBy?: string;
+  createdBy?: string
 
   @Column({ nullable: true })
-  updatedBy?: string;
+  updatedBy?: string
 }

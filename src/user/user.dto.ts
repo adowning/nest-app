@@ -1,17 +1,17 @@
-import { ObjectType, GraphQLISODateTime } from '@nestjs/graphql';
-import { FilterableField } from '@nestjs-query/query-graphql';
+import { ObjectType, GraphQLISODateTime } from '@nestjs/graphql'
+import { FilterableField } from '@nestjs-query/query-graphql'
 
 @ObjectType('User')
 export class UserDTO {
   @FilterableField()
-  id!: number;
+  id!: number
 
   @FilterableField()
-  username!: string;
+  username!: string
 
   @FilterableField(() => GraphQLISODateTime)
-  created!: Date;
+  created!: Date
 
   @FilterableField(() => GraphQLISODateTime)
-  updated!: Date;
+  updated!: Date
 }

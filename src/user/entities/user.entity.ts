@@ -1,31 +1,63 @@
+// import {
+//   Column,
+//   CreateDateColumn,
+//   Entity,
+//   PrimaryGeneratedColumn,
+//   UpdateDateColumn,
+//   OneToMany,
+//   JoinTable,
+// } from 'typeorm';
+
+// @Entity({ name: 'user' })
+// export class UserEntity {
+//   @PrimaryGeneratedColumn()
+//   id!: number;
+
+//   @Column()
+//   username!: string;
+
+//   @Column({ nullable: true })
+//   password?: string;
+
+//   @CreateDateColumn()
+//   created!: Date;
+
+//   @UpdateDateColumn()
+//   updated!: Date;
+
+//   //   @OneToMany(() => TodoItemEntity, (todo) => todo.owner)
+//   //   @JoinTable()
+//   //   todoItems!: TodoItemEntity[];
+// }
 import {
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  OneToMany,
-  JoinTable,
-} from 'typeorm';
+  // OneToMany,
+  // JoinTable,
+} from 'typeorm'
+// import { TodoItemEntity } from '../todo-item/todo-item.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id!: number
 
   @Column()
-  username!: string;
+  username!: string
 
   @Column({ nullable: true })
-  password?: string;
+  password?: string
 
   @CreateDateColumn()
-  created!: Date;
+  created!: Date
 
   @UpdateDateColumn()
-  updated!: Date;
+  updated!: Date
 
-  //   @OneToMany(() => TodoItemEntity, (todo) => todo.owner)
-  //   @JoinTable()
-  //   todoItems!: TodoItemEntity[];
+  // @OneToMany(() => TodoItemEntity, (todo) => todo.owner)
+  // @JoinTable()
+  // todoItems!: TodoItemEntity[];
 }

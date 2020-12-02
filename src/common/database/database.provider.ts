@@ -1,4 +1,4 @@
-import { createConnection } from 'typeorm';
+import { createConnection } from 'typeorm'
 
 export const databaseProviders = [
   {
@@ -8,11 +8,13 @@ export const databaseProviders = [
         type: 'postgres',
         port: 5436,
         host: 'localhost',
-        username: 'typeorm',
+        username: 'nestjs_query',
         database: 'typeorm',
         autoLoadEntities: true,
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+
         synchronize: true,
         ...overrides,
       }),
   },
-];
+]

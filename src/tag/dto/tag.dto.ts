@@ -10,9 +10,9 @@ import {
   UpdateOneInputType,
   BeforeUpdateMany,
   UpdateManyInputType,
-} from '@nestjs-query/query-graphql';
-import { ObjectType, ID, GraphQLISODateTime } from '@nestjs/graphql';
-import { UserContext } from 'src/auth/auth.interfaces';
+} from '@nestjs-query/query-graphql'
+import { ObjectType, ID, GraphQLISODateTime } from '@nestjs/graphql'
+import { UserContext } from 'src/auth/auth.interfaces'
 // import { UserContext } from '../../auth/auth.interfaces';
 
 @ObjectType('Tag')
@@ -23,37 +23,37 @@ import { UserContext } from 'src/auth/auth.interfaces';
 // })
 @BeforeCreateMany(
   (input: CreateManyInputType<TagDTO>, context: UserContext) => {
-    const createdBy = context.req.user.username;
-    input.input = input.input.map((c) => ({ ...c, createdBy }));
-    return input;
+    const createdBy = context.req.user.username
+    input.input = input.input.map((c) => ({ ...c, createdBy }))
+    return input
   },
 )
 @BeforeUpdateOne((input: UpdateOneInputType<TagDTO>, context: UserContext) => {
-  input.update.updatedBy = context.req.user.username;
-  return input;
+  input.update.updatedBy = context.req.user.username
+  return input
 })
 @BeforeUpdateMany(
   (input: UpdateManyInputType<TagDTO, TagDTO>, context: UserContext) => {
-    input.update.updatedBy = context.req.user.username;
-    return input;
+    input.update.updatedBy = context.req.user.username
+    return input
   },
 )
 export class TagDTO {
   @FilterableField(() => ID)
-  id!: number;
+  id!: number
 
   @FilterableField()
-  name!: string;
+  name!: string
 
   @FilterableField(() => GraphQLISODateTime)
-  created!: Date;
+  created!: Date
 
   @FilterableField(() => GraphQLISODateTime)
-  updated!: Date;
+  updated!: Date
 
   @FilterableField({ nullable: true })
-  createdBy?: string;
+  createdBy?: string
 
   @FilterableField({ nullable: true })
-  updatedBy?: string;
+  updatedBy?: string
 }

@@ -1,34 +1,53 @@
+import { PartialFilled } from 'src/common/partial-filled.model'
 import {
   Column,
   CreateDateColumn,
-  Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   OneToMany,
   ManyToMany,
   JoinTable,
   ManyToOne,
-} from 'typeorm';
-import { OrderEntity } from '../../order/entities/order.entity';
-import { TagEntity } from '../../tag/tag.entity';
+  Entity,
+} from 'typeorm'
+import { OrderEntity } from '../../order/entities/order.entity'
+import { TagEntity } from '../../tag/tag.entity'
 // import { UserEntity } from '../user/user.entity';
 
-@Entity({ name: 'account_item' })
-export class AccountEntity {
+@Entity({ name: 'account' })
+export class AccountEntity extends PartialFilled<AccountEntity> {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id!: number
 
   @Column({ nullable: false })
-  accountName!: string;
+  accountName!: string
 
   @Column({ nullable: false })
-  accountID!: string;
+  accountID!: string
 
-  // @Column()
-  // completed!: boolean;
+  @Column({ nullable: false })
+  primaryPhone!: string
 
-  // @Column({ nullable: false })
-  // ownerId!: string;
+  @Column({ nullable: true })
+  firstName?: string
+
+  @Column({ nullable: true })
+  lastName?: string
+
+  @Column({ nullable: true })
+  prettyAddress?: string
+
+  @Column({ nullable: true })
+  companyName?: string
+
+  @Column('text', { nullable: true, array: true })
+  phoneList!: string[]
+
+  @Column({ nullable: true })
+  email?: string
+
+  @Column({ nullable: true })
+  commercial?: boolean
 
   // @ManyToOne(() => UserEntity, (u) => u.accounts, {
   //   onDelete: 'CASCADE',
@@ -36,24 +55,21 @@ export class AccountEntity {
   // })
   // owner!: UserEntity;
   @OneToMany(() => OrderEntity, (order) => order.account)
-  orders?: OrderEntity[];
+  orders?: OrderEntity[]
 
   @CreateDateColumn()
-  created!: Date;
+  created!: Date
 
   @UpdateDateColumn()
-  updated!: Date;
+  updated!: Date
 
   @ManyToMany(() => TagEntity, (tag) => tag.accounts)
   @JoinTable()
-  tags!: TagEntity[];
-
-  @Column({ type: 'integer', nullable: false, default: 0 })
-  priority!: number;
+  tags?: TagEntity[]
 
   @Column({ nullable: true })
-  createdBy?: string;
+  createdBy?: string
 
   @Column({ nullable: true })
-  updatedBy?: string;
+  updatedBy?: string
 }

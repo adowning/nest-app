@@ -1,12 +1,12 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { UnauthorizedException, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LoginResponseDto } from './dto/login-response.dto';
-import { LoginInputDTO } from './dto/login-input.dto';
-import { UserDTO } from '../user/user.dto';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { CurrentUser } from './current-user.decorator';
-import { AuthenticatedUser } from './auth.interfaces';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql'
+import { UnauthorizedException, UseGuards } from '@nestjs/common'
+import { AuthService } from './auth.service'
+import { LoginResponseDto } from './dto/login-response.dto'
+import { LoginInputDTO } from './dto/login-input.dto'
+import { UserDTO } from '../user/user.dto'
+import { JwtAuthGuard } from './jwt-auth.guard'
+import { CurrentUser } from './current-user.decorator'
+import { AuthenticatedUser } from './auth.interfaces'
 
 @Resolver()
 export class AuthResolver {
@@ -17,16 +17,16 @@ export class AuthResolver {
     const user = await this.authService.validateUser(
       input.username,
       input.password,
-    );
+    )
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException()
     }
-    return this.authService.login(user);
+    return this.authService.login(user)
   }
 
   @UseGuards(JwtAuthGuard)
   @Query(() => UserDTO)
   me(@CurrentUser() user: AuthenticatedUser): Promise<UserDTO> {
-    return this.authService.currentUser(user);
+    return this.authService.currentUser(user)
   }
 }

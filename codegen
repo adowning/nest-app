@@ -1,0 +1,5 @@
+generates:
+  './src/schema.ts':
+    plugins:
+      - '@madsci/graphql-codegen-nestjs'
+      - 'typescript-operations'

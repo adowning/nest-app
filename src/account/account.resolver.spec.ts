@@ -1,19 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AccountResolver } from './account.resolver';
-import { AccountService } from './account.service';
+import { Test, TestingModule } from '@nestjs/testing'
+import { AccountResolver } from '../serviceMonster/account.resolver'
+import { AccountService } from '../serviceMonster/account.service'
 
 describe('AccountResolver', () => {
-  let resolver: AccountResolver;
+  let resolver: AccountResolver
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [AccountResolver, AccountService],
-    }).compile();
+    }).compile()
 
-    resolver = module.get<AccountResolver>(AccountResolver);
-  });
+    resolver = module.get<AccountResolver>(AccountResolver)
+  })
 
   it('should be defined', () => {
-    expect(resolver).toBeDefined();
-  });
-});
+    expect(resolver).toBeDefined()
+  })
+})

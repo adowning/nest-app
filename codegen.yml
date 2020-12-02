@@ -1,0 +1,13 @@
+overwrite: true
+schema: './schema.gql'
+documents: null
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-resolvers'
+      - '@madsci/graphql-codegen-nestjs'
+      - 'typescript-operations'
+  ./graphql.schema.json:
+    plugins:
+      - 'introspection'
