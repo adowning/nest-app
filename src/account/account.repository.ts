@@ -46,10 +46,6 @@ export class AccountRepository extends Repository<AccountEntity> {
               //no a property from prototype chain
             }
           }
-          // account.accountID = record.accountID
-          // account.primaryPhone = record.primaryPhone
-          // account.accountName = record.accountName
-          //   account.accountID = record.accountID
           await repository.save(account)
           fetchedIds.push(account.id.toString())
         }

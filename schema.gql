@@ -128,7 +128,9 @@ type User {
 type Order {
   id: ID!
   orderID: String!
-  orderName: String!
+  orderType: String!
+  orderNumber: Float!
+  accountID: String!
   created: DateTime!
   updated: DateTime!
 }
@@ -289,7 +291,29 @@ input OrderFilter {
   or: [OrderFilter!]
   id: IDFilterComparison
   orderID: StringFieldComparison
-  orderName: StringFieldComparison
+  orderType: StringFieldComparison
+  orderNumber: NumberFieldComparison
+  accountID: StringFieldComparison
+}
+
+input NumberFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: Float
+  neq: Float
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+  in: [Float!]
+  notIn: [Float!]
+  between: NumberFieldComparisonBetween
+  notBetween: NumberFieldComparisonBetween
+}
+
+input NumberFieldComparisonBetween {
+  lower: Float!
+  upper: Float!
 }
 
 input OrderSort {
@@ -301,7 +325,9 @@ input OrderSort {
 enum OrderSortFields {
   id
   orderID
-  orderName
+  orderType
+  orderNumber
+  accountID
 }
 
 input TagAggregateFilter {
@@ -320,7 +346,9 @@ input OrderAggregateFilter {
   or: [OrderAggregateFilter!]
   id: IDFilterComparison
   orderID: StringFieldComparison
-  orderName: StringFieldComparison
+  orderType: StringFieldComparison
+  orderNumber: NumberFieldComparison
+  accountID: StringFieldComparison
 }
 
 type AccountDeleteResponse {
@@ -500,23 +528,39 @@ type AccountTagsAggregateResponse {
 type AccountOrdersCountAggregate {
   id: Int
   orderID: Int
-  orderName: Int
+  orderType: Int
+  orderNumber: Int
+  accountID: Int
+}
+
+type AccountOrdersSumAggregate {
+  orderNumber: Float
+}
+
+type AccountOrdersAvgAggregate {
+  orderNumber: Float
 }
 
 type AccountOrdersMinAggregate {
   id: ID
   orderID: String
-  orderName: String
+  orderType: String
+  orderNumber: Float
+  accountID: String
 }
 
 type AccountOrdersMaxAggregate {
   id: ID
   orderID: String
-  orderName: String
+  orderType: String
+  orderNumber: Float
+  accountID: String
 }
 
 type AccountOrdersAggregateResponse {
   count: AccountOrdersCountAggregate
+  sum: AccountOrdersSumAggregate
+  avg: AccountOrdersAvgAggregate
   min: AccountOrdersMinAggregate
   max: AccountOrdersMaxAggregate
 }
@@ -524,7 +568,9 @@ type AccountOrdersAggregateResponse {
 type OrderDeleteResponse {
   id: ID
   orderID: String
-  orderName: String
+  orderType: String
+  orderNumber: Float
+  accountID: String
   created: DateTime
   updated: DateTime
 }
@@ -543,23 +589,39 @@ type OrderConnection {
 type OrderCountAggregate {
   id: Int
   orderID: Int
-  orderName: Int
+  orderType: Int
+  orderNumber: Int
+  accountID: Int
+}
+
+type OrderSumAggregate {
+  orderNumber: Float
+}
+
+type OrderAvgAggregate {
+  orderNumber: Float
 }
 
 type OrderMinAggregate {
   id: ID
   orderID: String
-  orderName: String
+  orderType: String
+  orderNumber: Float
+  accountID: String
 }
 
 type OrderMaxAggregate {
   id: ID
   orderID: String
-  orderName: String
+  orderType: String
+  orderNumber: Float
+  accountID: String
 }
 
 type OrderAggregateResponse {
   count: OrderCountAggregate
+  sum: OrderSumAggregate
+  avg: OrderAvgAggregate
   min: OrderMinAggregate
   max: OrderMaxAggregate
 }
@@ -741,7 +803,9 @@ input AccountFilterOrderFilter {
   or: [AccountFilterOrderFilter!]
   id: IDFilterComparison
   orderID: StringFieldComparison
-  orderName: StringFieldComparison
+  orderType: StringFieldComparison
+  orderNumber: NumberFieldComparison
+  accountID: StringFieldComparison
 }
 
 input AccountSort {
@@ -1013,7 +1077,9 @@ input OrderDeleteFilter {
   or: [OrderDeleteFilter!]
   id: IDFilterComparison
   orderID: StringFieldComparison
-  orderName: StringFieldComparison
+  orderType: StringFieldComparison
+  orderNumber: NumberFieldComparison
+  accountID: StringFieldComparison
 }
 
 input UpdateOneOrderInput {
@@ -1043,7 +1109,9 @@ input OrderUpdateFilter {
   or: [OrderUpdateFilter!]
   id: IDFilterComparison
   orderID: StringFieldComparison
-  orderName: StringFieldComparison
+  orderType: StringFieldComparison
+  orderNumber: NumberFieldComparison
+  accountID: StringFieldComparison
 }
 
 input CreateOneOrderInput {

@@ -16,11 +16,16 @@ import { AccountEntity } from './entities/account.entity'
 import { InvalidExternalIdException } from 'src/common/exceptions/invalid-external-id.exception'
 import { SmAccount } from 'src/serviceMonster/sm-account.model'
 import { isDefined } from 'src/common/helpers'
+import { batchCall } from 'src/common/helpers/batchCall'
 
 export class AccountService extends NoOpQueryService<
   AccountDTO,
   AccountInputDTO
 > {
+  private firstRun: boolean
+  private total: number
+  private accountsList: [string?]
+  private urls: [string?]
   constructor(
     @InjectQueryService(AccountEntity)
     private readonly queryService: QueryService<AccountEntity>,
@@ -28,45 +33,12 @@ export class AccountService extends NoOpQueryService<
     private readonly accountRepository: AccountRepository,
   ) {
     super()
+    this.firstRun = true
+    this.total = 0
+    this.accountsList = []
+    this.urls = []
   }
 
-  async fetch(): Promise<string[]> {
-    const _externalAccounts = await this.smService.findAccounts()
-    // externalAccounts = externalAccounts.filter((account) => {
-    //   for (const key in account) {
-    //     const value = account[key]
-    //     const valueType = typeof value
-    //     //optional check for properties from prototype chain
-    //     if (account.hasOwnProperty(key)) {
-    //       //no a property from prototype chain
-    //     } else {
-    //       //property from protytpe chain
-    //     }
-    //   }
-    // })
-    let externalAccounts: SmAccount[] = []
-    externalAccounts = _externalAccounts.filter((account) => {
-      account.phoneList = []
-      typeof account.phone1 === 'string'
-        ? account.phoneList.push(account.phone1)
-        : null
-      typeof account.phone2 === 'string'
-        ? account.phoneList.push(account.phone2)
-        : null
-      typeof account.phone3 === 'string'
-        ? account.phoneList.push(account.phone3)
-        : null
-      return account.phoneList.length > 0 ? account : null
-    })
-    return await this.accountRepository.syncByExternalIds(
-      externalAccounts.map((externalAccount) => ({
-        accountID: externalAccount.accountID.toString(),
-        accountName: externalAccount.accountName,
-        phoneList: externalAccount.phoneList,
-        primaryPhone: externalAccount.phoneList[0],
-      })),
-    )
-  }
   createOne({
     accountName: accountName,
   }: AccountInputDTO): Promise<AccountDTO> {
@@ -112,20 +84,4 @@ export class AccountService extends NoOpQueryService<
   deleteOne(id: string | number): Promise<AccountDTO> {
     return this.queryService.deleteOne(id)
   }
-
-  // async fetchByExternalId(externalId: string): Promise<string> {
-  //   const externalUser = await this.smService.findAccount(externalId)
-  //   if (!externalUser) {
-  //     throw new InvalidExternalIdException()
-  //   }
-  //   const [id] = await this.accountRepository.syncByExternalIds([
-  //     {
-  //       accountID: externalUser.accountID.toString(),
-  //       accountName: externalUser.accountName,
-  //       phone1: externalUser.phone1,
-  //     },
-  //   ])
-
-  //   return id
-  // }
 }

@@ -10,11 +10,17 @@ export class OrderDTO {
   orderID!: string
 
   @FilterableField()
-  orderName!: string
+  orderType!: string
+
+  @FilterableField()
+  orderNumber!: number
+
+  @FilterableField()
+  accountID!: string
 
   @Field(() => GraphQLISODateTime)
-  created!: Date
+  created?: Date
 
   @Field(() => GraphQLISODateTime)
-  updated!: Date
+  updated?: Date
 }

@@ -14,13 +14,16 @@ import { JobEntity } from '../../job/entities/job.entity'
 import { TagEntity } from '../../tag/tag.entity'
 // import { UserEntity } from '../../user/entities/user.entity';
 
-@Entity({ name: 'order_item' })
+@Entity({ name: 'order' })
 export class OrderEntity {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column()
-  type!: string
+  @Column({ nullable: false })
+  orderType!: string
+
+  @Column({ nullable: false })
+  orderNumber!: number
 
   @Column({ nullable: false })
   orderID!: string
@@ -30,28 +33,25 @@ export class OrderEntity {
 
   @ManyToOne(() => AccountEntity, (a) => a.orders, {
     onDelete: 'CASCADE',
-    nullable: false,
+    nullable: true,
   })
-  account!: AccountEntity
+  account?: AccountEntity
 
   @OneToMany(() => JobEntity, (job) => job.order)
-  jobs!: JobEntity[]
+  jobs?: JobEntity[]
 
   @Column()
-  dueDate!: Date
+  dueDate?: Date
 
   @CreateDateColumn()
-  created!: Date
+  created?: Date
 
   @UpdateDateColumn()
-  updated!: Date
+  updated?: Date
 
   @ManyToMany(() => TagEntity, (tag) => tag.orders)
   @JoinTable()
-  tags!: TagEntity[]
-
-  @Column({ type: 'integer', nullable: false, default: 0 })
-  priority!: number
+  tags?: TagEntity[]
 
   @Column({ nullable: true })
   createdBy?: string
